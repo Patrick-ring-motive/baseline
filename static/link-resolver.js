@@ -26,7 +26,7 @@ void async function LinkResolver(){
     async function transformLinks(attr){
     
     
-      queryApplyAll('['+attr+'^="/"],['+attr+'^="./"],['+attr+'^="../"],['+attr+']:not(['+attr+'*=":"])',
+      queryApplyAll('['+attr+'^="/"]:not(link),['+attr+'^="./"]:not(link),['+attr+'^="../"]:not(link),['+attr+']:not(link,['+attr+'*=":"])',
       (el)=>{
                     el.updateAttribute(attr,el[attr]);
       });
@@ -52,7 +52,7 @@ void async function LinkResolver(){
     
       }
     
-      queryApplyAll('['+attr+'^="http://"]',
+      queryApplyAll('['+attr+'^="http://"]:not(link)',
         (el)=>{
           let char='?';
           if(el[attr].includes('?')){char='&';}
