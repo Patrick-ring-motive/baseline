@@ -9,7 +9,10 @@ void async function LinkResolver(){
   if(!globalThis.hostTargetList){
       globalThis.hostTargetList = ['www.google.com'];  
   }
-    
+  if(location.href.includes('typhon')){
+	  hostTargetList.push('typhon.com');
+	  hostTargetList.push('www.typhone.net');
+  }  
   
   console.log('Link Resolver started');   
   globalThis.LinkResolver = 'running';
