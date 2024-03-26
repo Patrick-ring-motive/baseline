@@ -5,35 +5,38 @@ void async function LinkResolver(){
   if(!globalThis.declare){
     await import(`https://patrick-ring-motive.github.io/framework/framework.js?${new Date().getTime()}`);
   }
-  await DOMInteractive();
+  //await DOMInteractive();
   if(!globalThis.hostTargetList){
       globalThis.hostTargetList = ['www.google.com'];  
   }
     
   
   console.log('Link Resolver started');   
+  globalThis.LinkResolverLock
   globalThis.LinkResolver = 'running';
-    declare(()=>{
+    resolveAll();
+    declare(()=>{  
+      resolveAll();  
+    });
     
+    async function resolveAll(){
+      
       transformLinks('href');
       transformLinks('src');
       transformLinks('action');
-  
-    });
-    
-
+    }
     
     async function transformLinks(attr){
+      
     
-    
-      queryApplyAll('['+attr+'^="/"]:not(link),['+attr+'^="./"]:not(link),['+attr+'^="../"]:not(link),['+attr+']:not(link,['+attr+'*=":"])',
+      queryApplyAll('['+attr+'^="/"]:not(link,img),['+attr+'^="./"]:not(link,img),['+attr+'^="../"]:not(link,img),['+attr+']:not(link,img,['+attr+'*=":"])',
       (el)=>{
                     el.updateAttribute(attr,el[attr]);
       });
     
       const hostTargetList_length = globalThis.hostTargetList.length;
       for(let i=0;i<hostTargetList_length;i++){
-        queryApplyAll('['+attr+'^="https://'+globalThis.hostTargetList[i]+'"]:not(link)',
+        queryApplyAll('['+attr+'^="https://'+globalThis.hostTargetList[i]+'"]:not(link,img)',
         (el)=>{
 
           let hash='';
@@ -52,7 +55,7 @@ void async function LinkResolver(){
     
       }
     
-      queryApplyAll('['+attr+'^="http://"]:not(link)',
+      queryApplyAll('['+attr+'^="http://"]:not(link,img)',
         (el)=>{
           let char='?';
           if(el[attr].includes('?')){char='&';}
