@@ -7,7 +7,7 @@ void async function LinkResolver(){
   }
   await DOMInteractive();
   if(!globalThis.hostTargetList){
-      globalThis.hostTargetList = ['readallcomics.com','www.readallcomics.com'];  
+      globalThis.hostTargetList = ['www.google.com'];  
   }
     
   
@@ -33,7 +33,7 @@ void async function LinkResolver(){
     
       const hostTargetList_length = globalThis.hostTargetList.length;
       for(let i=0;i<hostTargetList_length;i++){
-        queryApplyAll('['+attr+'^="https://'+globalThis.hostTargetList[i]+'"]:not([backup])',
+        queryApplyAll('['+attr+'^="https://'+globalThis.hostTargetList[i]+'"]:not(link)',
         (el)=>{
 
           let hash='';
