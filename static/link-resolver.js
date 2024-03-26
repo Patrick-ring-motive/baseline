@@ -1,5 +1,7 @@
 
 void async function LinkResolver(){
+  if(globalThis.LinkResolver){console.log('Link Resolver already running');return;}
+  globalThis.LinkResolver = 'starting';
   if(!globalThis.declare){
     await import(`https://patrick-ring-motive.github.io/framework/framework.js?${new Date().getTime()}`);
   }
@@ -8,12 +10,9 @@ void async function LinkResolver(){
       globalThis.hostTargetList = ['readallcomics.com','www.readallcomics.com'];  
   }
     
-    
   
-    
- 
-    
-    
+  console.log('Link Resolver started');   
+  globalThis.LinkResolver = 'running';
     declare(()=>{
     
       transformLinks('href');
