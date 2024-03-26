@@ -1,0 +1,3 @@
+body,img,svg,video,picture,image,audio,embed{
+  filter:hue-rotate(180deg) !important;
+}
