@@ -20,6 +20,7 @@ void async function LinkResolver(){
     
     async function resolveAll(){
       cloneStyles();
+      transferImages();
       transformLinks('href');
       transformLinks('src');
       transformLinks('action');
@@ -114,7 +115,62 @@ void async function LinkResolver(){
           });
       }
   }
+
+
+
+	  async function transferImages(){
+      const hostTargetList_length = globalThis.hostTargetList.length;
+      for(let i=0;i<hostTargetList_length;i++){
+        queryApplyAll('img[src^="https://'+globalThis.hostTargetList[i]+'"]',
+        (el)=>{
+          let hash='';
+          if(el['src'].includes('#')){hash='#'+el['src'].split('#')[1];}
+          let char='?';
+          if(el['src'].includes('?')){char='&';}
+		  	el.setAttribute('title','');
+			el.setAttribute('alt','');
+			el.style.backgroundSize='contain !important';
+			el.style.backgroundRepeat='no-repeat !important'; 
+			el.style.backgroundImage=`url('${el.getAttribute('src')}') !important`;
+             el.setAttribute('src',
+                               el['src'].split('#')[0]
+                                  .replace('https://'+globalThis.hostTargetList[i],
+                                   window.location.origin)+
+                                  char+'hostname='+
+                                  globalThis.hostTargetList[i]+
+                                  '&referer='+window.location.host+
+                                  hash);
+		
+        });
     
+      }
+    
+    queryApplyAll('img[src^="/"]:not([style*="background-image"]),[src^="./"]:not([style*="background-image"]),img[src^="../"]:not([style*="background-image"]),img[src]:not([clone],[src*=":"])',
+      (el)=>{
+	  	el.setAttribute('title','');
+		el.setAttribute('alt','');
+		el.style.backgroundSize='contain !important';
+		el.style.backgroundRepeat='no-repeat !important'; 
+		el.style.backgroundImage=`url('${el.getAttribute('src')}') !important`;
+          el.setAttribute('src',el.src);
+      });
+      if(location.protocol=='https://'){
+        queryApplyAll('img[src^="http://"]',
+          (el)=>{
+
+            let char='?';
+            if(el['src'].includes('?')){char='&';}
+				el.setAttribute('title','');
+				el.setAttribute('alt','');
+				el.style.backgroundSize='contain !important';
+				el.style.backgroundRepeat='no-repeat !important'; 
+				el.style.backgroundImage=`url('${el.getAttribute('src')}') !important`;
+               el.setAttribute('src',
+                                 el['src'].replaceAll("http://","https://"));
+
+          });
+      }
+  }
 }();
   
     
