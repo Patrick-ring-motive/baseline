@@ -1,4 +1,4 @@
-
+html[window-location*="go"]{
 .NavigationDrawer.js-header:not(.is-active){display:none !important;}
 
 
@@ -56,7 +56,7 @@ button:not(.Playground button),
   filter: drop-shadow(0 0 0.15rem black);
 }
 
-
+}
 html[user-agent*="afari"] .go-Select{
   background: unset !important;
   appearance: auto !important;
