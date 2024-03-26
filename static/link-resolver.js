@@ -12,7 +12,6 @@ void async function LinkResolver(){
     
   
   console.log('Link Resolver started');   
-  globalThis.LinkResolverLock
   globalThis.LinkResolver = 'running';
     resolveAll();
     declare(()=>{  
