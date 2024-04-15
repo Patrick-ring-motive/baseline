@@ -14,9 +14,12 @@ void async function ImportResources(){
     body().appendChild(buildElement('link',{attr:{href:"https://patrick-ring-motive.github.io/baseline/static/cloudflare-custom.css",rel:"stylesheet"}}));
   }
   
-  style('div.DocsToolbar--search',{display:'block'});
+
   
   if(!globalThis.LinkResolver){
     import('https://patrick-ring-motive.github.io/baseline/static/link-resolver.js');
   }
+
+  await DOMComplete();
+  style('div.DocsToolbar--search',{display:'block'});
 }();
