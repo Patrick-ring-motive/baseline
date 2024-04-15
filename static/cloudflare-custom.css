@@ -1,3 +1,6 @@
 html[theme="light"]{
   filter: invert(1) hue-rotate(180deg);
 }
+body{
+  filter:hue-rotate(75deg);
+}
