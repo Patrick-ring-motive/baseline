@@ -13,6 +13,6 @@ void async function(){
   });
   declare(()=>{
     queryApplyAll('html[window-location*="?ts"] .DocsToolbar--tools:not(:has(a[innerText*="Latest"]))',
-                  {prepend:[buildElement('a',{traits:{innerText:'Latest',href:(location.href.replace('?ts',''))},styles:{'text-decoration':'none','padding-right':'10%'}})]});
+                  {prepend:[buildElement('a',{traits:{innerText:'Latest',href:(location.href.replace('?ts',''))},styles:{'text-decoration':'none','padding-right':'10%',color:'orange'}})]});
   });
 }();
