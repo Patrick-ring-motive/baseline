@@ -2,19 +2,10 @@
 void async function LinkResolver(){
   if(globalThis.LinkResolver){console.log('Link Resolver already running');return;}
   globalThis.LinkResolver = 'starting';
-  if(!globalThis.declare){
-    await import(`https://patrick-ring-motive.github.io/framework/framework.js?${new Date().getTime()}`);
-  }
-  //await DOMInteractive();
-  if(!globalThis.hostTargetList){
-      globalThis.hostTargetList = ['www.google.com'];  
-  }
-  if(location.href.includes('typhon')){
-	  hostTargetList.push('typhon.com');
-	  hostTargetList.push('www.typhone.net');
-  }  
-  
+  globalThis.declare??await import(`https://patrick-ring-motive.github.io/framework/framework.js?${new Date().getTime()}`);
+  globalThis.hostTargetList ??= ['www.google.com'];  
   console.log('Link Resolver started');   
+	
   globalThis.LinkResolver = 'running';
     resolveAll();
     declare(()=>{  
@@ -30,18 +21,14 @@ void async function LinkResolver(){
     }
     
     async function transformLinks(attr){
-      
-    
       queryApplyAll('['+attr+'^="/"]:not(link,img),['+attr+'^="./"]:not(link,img),['+attr+'^="../"]:not(link,img),['+attr+']:not(link,img,['+attr+'*=":"])',
       (el)=>{
                     el.updateAttribute(attr,el[attr]);
       });
-    
       const hostTargetList_length = globalThis.hostTargetList.length;
       for(let i=0;i<hostTargetList_length;i++){
         queryApplyAll('['+attr+'^="https://'+globalThis.hostTargetList[i]+'"]:not(link,img)',
         (el)=>{
-
           let hash='';
           if(el[attr].includes('#')){hash='#'+el[attr].split('#')[1];}
           let char='?';
